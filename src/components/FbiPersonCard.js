@@ -1,11 +1,10 @@
 import React, { useState } from 'react';
 import '../css/styles.css';
-import FbiPersonDetailsModal from './FbiPersonDetailModal'; // Importe o componente do modal
+import FbiPersonDetailsModal from './FbiPersonDetailModal';
 
 const FbiPersonCard = ({ person }) => {
-  // Função para truncar o assunto
   const truncateSubject = (subject) => {
-    const maxLength = 60; // Defina o comprimento máximo desejado
+    const maxLength = 60;
     if (subject.length <= maxLength) {
       return subject;
     } else {
@@ -13,7 +12,7 @@ const FbiPersonCard = ({ person }) => {
     }
   };
 
-  const [modalShow, setModalShow] = useState(false); // Estado para controlar a exibição do modal
+  const [modalShow, setModalShow] = useState(false);
 
   return (
     <div className="card align-items-center person-card">

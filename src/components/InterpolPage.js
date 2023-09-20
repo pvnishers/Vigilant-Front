@@ -1,21 +1,24 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
-import InterpolPersonCard from './InterpolPersonCard';
+import FbiPersonCard from './FbiPersonCard';
 import PaginationComponent from './PaginationComponent';
-import InterpolFilterForm from './InterpolFilterForm';  // Importe o componente de filtro
+import FbiFilterForm from './FbiFilterForm';
+import LoadingSpinner from './LoadingSpinner';
 
-const InterpolPage = () => {
-  const [interpolPersons, setInterpolPersons] = useState([]);
+const FbiPage = () => {
+  const [fbiPersons, setFbiPersons] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
+  const [currentPage, setCurrentPage] = useState(0);
   const [filters, setFilters] = useState({
-    nameForename: '',
-    nationality: ''
+    title: '',
+    subject: '',
+    nationality: '',
+    sex: '',
+    race: ''
   });
   const [appliedFilters, setAppliedFilters] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
   const itemsPerPage = 15;
-  const navigate = useNavigate();
-  const location = useLocation();
-  const currentPage = new URLSearchParams(location.search).get('page') || 1;
 
   const applyFilters = () => {
     setAppliedFilters(filters);
@@ -23,43 +26,47 @@ const InterpolPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const queryString = Object.entries(appliedFilters).map(([key, value]) => `${key}=${value}`).join('&');
       try {
         const response = await fetch(
-          `https://vigilant-api-a2xyukeyka-uc.a.run.app/interpol/getallnotices?page=${currentPage}&${queryString}`
+          `https://vigilant-api-a2xyukeyka-uc.a.run.app/fbi/getallwanted?page=${currentPage + 1}&${queryString}`
         );
         if (response.ok) {
           const data = await response.json();
-          setInterpolPersons(data.notices);
+          setFbiPersons(data.wantedList);
           setTotalRecords(data.totalRecords);
         }
       } catch (error) {
-        console.error('Erro ao buscar dados da Interpol:', error);
+        console.error('Erro ao buscar dados do FBI:', error);
       }
+      setIsLoading(false);
     };
-
     fetchData();
   }, [currentPage, appliedFilters]);
 
   const handlePageChange = (selectedPage) => {
-    const nextPage = selectedPage.selected + 1;
-    navigate(`?page=${nextPage}`);
+    setCurrentPage(selectedPage.selected);
   };
 
   return (
     <div className="container mt-3">
       <div className="row">
         <div className="col-md-3">
-          <InterpolFilterForm filters={filters} setFilters={setFilters} applyFilters={applyFilters} />
+          <FbiFilterForm filters={filters} setFilters={setFilters} applyFilters={applyFilters} />
         </div>
         <div className="col-md-9">
-          <div className="row">
-            {interpolPersons.map((person) => (
-              <div key={person.id} className="col-md-4">
-                <InterpolPersonCard person={person} />
-              </div>
-            ))}
-          </div>
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <div className="row">
+              {fbiPersons.map((person) => (
+                <div key={person.id} className="col-md-4">
+                  <FbiPersonCard person={person} />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <PaginationComponent
@@ -70,4 +77,4 @@ const InterpolPage = () => {
   );
 };
 
-export default InterpolPage;
+export default FbiPage;

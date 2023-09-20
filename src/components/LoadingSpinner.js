@@ -1,5 +1,5 @@
 import React from 'react';
-import '../css/spinner.css'; // Importe o arquivo CSS para a animação
+import '../css/spinner.css';
 
 const LoadingSpinner = () => {
   return (

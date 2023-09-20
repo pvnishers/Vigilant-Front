@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import FbiPersonCard from './FbiPersonCard';
 import PaginationComponent from './PaginationComponent';
 import FbiFilterForm from './FbiFilterForm';
+import LoadingSpinner from './LoadingSpinner';
 
 const FbiPage = () => {
   const [fbiPersons, setFbiPersons] = useState([]);
@@ -14,7 +15,8 @@ const FbiPage = () => {
     sex: '',
     race: ''
   });
-  const [appliedFilters, setAppliedFilters] = useState({}); // novo estado
+  const [appliedFilters, setAppliedFilters] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   const itemsPerPage = 15;
 
@@ -24,6 +26,7 @@ const FbiPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
+      setIsLoading(true);
       const queryString = Object.entries(appliedFilters).map(([key, value]) => `${key}=${value}`).join('&');
       try {
         const response = await fetch(
@@ -37,6 +40,7 @@ const FbiPage = () => {
       } catch (error) {
         console.error('Erro ao buscar dados do FBI:', error);
       }
+      setIsLoading(false);
     };
     fetchData();
   }, [currentPage, appliedFilters]);
@@ -52,13 +56,17 @@ const FbiPage = () => {
           <FbiFilterForm filters={filters} setFilters={setFilters} applyFilters={applyFilters} />
         </div>
         <div className="col-md-9">
-          <div className="row">
-            {fbiPersons.map((person) => (
-              <div key={person.id} className="col-md-4">
-                <FbiPersonCard person={person} />
-              </div>
-            ))}
-          </div>
+          {isLoading ? (
+            <LoadingSpinner />
+          ) : (
+            <div className="row">
+              {fbiPersons.map((person) => (
+                <div key={person.id} className="col-md-4">
+                  <FbiPersonCard person={person} />
+                </div>
+              ))}
+            </div>
+          )}
         </div>
       </div>
       <PaginationComponent

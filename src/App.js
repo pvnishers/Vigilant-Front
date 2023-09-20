@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import './bootstrap/css/bootstrap.min.css';
 import Navbar from './components/Navbar';
-import FilterForm from './components/FbiFilterForm';
-import InterpolPage from './components/InterpolPage'; // Importe o componente da Interpol
-import FbiPage from './components/FbiPage'; // Importe o novo componente do FBI
+import InterpolPage from './components/InterpolPage'; 
+import FbiPage from './components/FbiPage';
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 
