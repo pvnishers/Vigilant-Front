@@ -1,24 +1,23 @@
 import React, { useState, useEffect } from 'react';
-import FbiPersonCard from './FbiPersonCard';
+import { useNavigate, useLocation } from 'react-router-dom';
+import InterpolPersonCard from './InterpolPersonCard';
 import PaginationComponent from './PaginationComponent';
-import FbiFilterForm from './FbiFilterForm';
-import LoadingSpinner from './LoadingSpinner';
+import InterpolFilterForm from './InterpolFilterForm';
+import LoadingComponent from './LoadingComponent'; // Não esqueça de importar o componente de carregamento
 
-const FbiPage = () => {
-  const [fbiPersons, setFbiPersons] = useState([]);
+const InterpolPage = () => {
+  const [interpolPersons, setInterpolPersons] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [currentPage, setCurrentPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(false); // Novo estado para controle de carregamento
   const [filters, setFilters] = useState({
-    title: '',
-    subject: '',
-    nationality: '',
-    sex: '',
-    race: ''
+    nameForename: '',
+    nationality: ''
   });
   const [appliedFilters, setAppliedFilters] = useState({});
-  const [isLoading, setIsLoading] = useState(false);
-
   const itemsPerPage = 15;
+  const navigate = useNavigate();
+  const location = useLocation();
+  const currentPage = new URLSearchParams(location.search).get('page') || 1;
 
   const applyFilters = () => {
     setAppliedFilters(filters);
@@ -26,43 +25,45 @@ const FbiPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true);
+      setIsLoading(true); // Ativa o estado de carregamento
       const queryString = Object.entries(appliedFilters).map(([key, value]) => `${key}=${value}`).join('&');
       try {
         const response = await fetch(
-          `https://vigilant-api-a2xyukeyka-uc.a.run.app/interpol/getallnotices?page=${currentPage + 1}&${queryString}`
+          `https://vigilant-api-a2xyukeyka-uc.a.run.app/interpol/getallnotices?page=${currentPage}&${queryString}`
         );
         if (response.ok) {
           const data = await response.json();
-          setFbiPersons(data.wantedList);
+          setInterpolPersons(data.notices);
           setTotalRecords(data.totalRecords);
         }
       } catch (error) {
-        console.error('Erro ao buscar dados do FBI:', error);
+        console.error('Erro ao buscar dados da Interpol:', error);
       }
-      setIsLoading(false);
+      setIsLoading(false); // Desativa o estado de carregamento
     };
+
     fetchData();
   }, [currentPage, appliedFilters]);
 
   const handlePageChange = (selectedPage) => {
-    setCurrentPage(selectedPage.selected);
+    const nextPage = selectedPage.selected + 1;
+    navigate(`?page=${nextPage}`);
   };
 
   return (
     <div className="container mt-3">
       <div className="row">
         <div className="col-md-3">
-          <FbiFilterForm filters={filters} setFilters={setFilters} applyFilters={applyFilters} />
+          <InterpolFilterForm filters={filters} setFilters={setFilters} applyFilters={applyFilters} />
         </div>
         <div className="col-md-9">
           {isLoading ? (
-            <LoadingSpinner />
+            <LoadingComponent /> // Mostra o componente de carregamento quando isLoading for verdadeiro
           ) : (
             <div className="row">
-              {fbiPersons.map((person) => (
+              {interpolPersons.map((person) => (
                 <div key={person.id} className="col-md-4">
-                  <FbiPersonCard person={person} />
+                  <InterpolPersonCard person={person} />
                 </div>
               ))}
             </div>
@@ -77,4 +78,4 @@ const FbiPage = () => {
   );
 };
 
-export default FbiPage;
+export default InterpolPage;
