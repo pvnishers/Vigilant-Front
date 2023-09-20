@@ -6,7 +6,7 @@ const PaginationComponent = ({ pageCount, onPageChange }) => {
     <nav aria-label="Page navigation example">
       <ul className="pagination justify-content-center">
         <ReactPaginate
-          breakLabel={<a className="page-link">...</a>}
+          breakLabel={<button className="page-link" type="button">...</button>}
           pageCount={pageCount}
           marginPagesDisplayed={2}
           pageRangeDisplayed={5}

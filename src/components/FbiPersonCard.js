@@ -22,13 +22,9 @@ const FbiPersonCard = ({ person }) => {
         <h5 className="card-title">{person.title}</h5>
         <p className="card-text">Subject: {truncateSubject(person.subjects || 'N/A')}</p>
         <p className="card-text">Nationality: {person.nationality || 'N/A'}</p>
-        
-        {/* Botão "See details" que abre o modal */}
         <button className="btn btn-primary" onClick={() => setModalShow(true)}>
           See details
         </button>
-        
-        {/* Modal de detalhes do FBI */}
         <FbiPersonDetailsModal
           person={person}
           show={modalShow}

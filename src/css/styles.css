@@ -8,4 +8,5 @@
 .person-card {
     width: 16rem;
     height: 400px; /* Defina a altura desejada aqui */
+    margin-bottom: 15px;
 }
