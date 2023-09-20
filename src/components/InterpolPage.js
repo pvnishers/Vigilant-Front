@@ -30,7 +30,7 @@ const FbiPage = () => {
       const queryString = Object.entries(appliedFilters).map(([key, value]) => `${key}=${value}`).join('&');
       try {
         const response = await fetch(
-          `https://vigilant-api-a2xyukeyka-uc.a.run.app/fbi/getallwanted?page=${currentPage + 1}&${queryString}`
+          `https://vigilant-api-a2xyukeyka-uc.a.run.app/interpol/getallnotices?page=${currentPage + 1}&${queryString}`
         );
         if (response.ok) {
           const data = await response.json();
