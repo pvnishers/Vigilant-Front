@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import './bootstrap/css/bootstrap.min.css';
 import Navbar from './components/Navbar';
 import InterpolPage from './components/InterpolPage'; 
@@ -7,14 +7,6 @@ import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 
 
 const App = () => {
-  const [setPersons] = useState([]);
-
-  useEffect(() => {
-    fetch('https://vigilant-api-a2xyukeyka-uc.a.run.app/fbi/getallwanted?page=1')
-      .then((response) => response.json())
-      .then((data) => setPersons(data))
-      .catch((error) => console.error('Erro ao buscar dados:', error));
-  }, []);
 
   return (
     <Router>
