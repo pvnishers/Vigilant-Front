@@ -57,7 +57,7 @@ const InterpolPage = () => {
         </div>
         <div className="col-md-9">
           {isLoading ? (
-            <LoadingSpinner /> // Mostra o componente de carregamento quando isLoading for verdadeiro
+            <LoadingSpinner />
           ) : (
             <div className="row">
               {interpolPersons.map((person) => (
