@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import './bootstrap/css/bootstrap.min.css';
 import Navbar from './components/Navbar';
-import FilterForm from './components/FilterForm';
-import PersonCard from './components/PersonCard';
+import FilterForm from './components/FbiFilterForm';
+import InterpolPage from './components/InterpolPage'; // Importe o componente da Interpol
+import FbiPage from './components/FbiPage'; // Importe o novo componente do FBI
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+
 
 const App = () => {
   const [nameFilter, setNameFilter] = useState('');
@@ -26,23 +29,26 @@ const App = () => {
   };
 
   return (
-    <>
-      <Navbar />
-      <div className="row mt-3">
-        <FilterForm nameFilter={nameFilter} setNameFilter={setNameFilter} />
-        <div className="col-md-10" id="wanted-persons">
-          {chunkArray(persons, 3).map((group, index) => (
-            <div key={index} className="row mb-3">
-              {group.map((person) => (
-                <div key={person.id} className="col-md-4">
-                  <PersonCard person={person} />
-                </div>
-              ))}
-            </div>
-          ))}
+    <Router>
+      <>
+        <Navbar />
+        <div className="row mt-3">
+          <div className="col-md-10" id="wanted-persons">
+            <Routes>
+              {/* Rota para a página do FBI */}
+              <Route path="/fbi" element={<FbiPage/>}>
+              </Route>
+              {/* Rota para a página da Interpol */}
+              <Route path="/interpol" element={<InterpolPage/>}>
+              </Route>
+              {/* Rota padrão (outras páginas) */}
+              <Route path="/">
+              </Route>
+            </Routes>
+          </div>
         </div>
-      </div>
-    </>
+      </>
+    </Router>
   );
 };
 
