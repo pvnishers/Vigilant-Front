@@ -3,12 +3,11 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import InterpolPersonCard from './InterpolPersonCard';
 import PaginationComponent from './PaginationComponent';
 import InterpolFilterForm from './InterpolFilterForm';
-import LoadingComponent from './LoadingComponent'; // Não esqueça de importar o componente de carregamento
-
+import LoadingSpinner from './LoadingSpinner'; 
 const InterpolPage = () => {
   const [interpolPersons, setInterpolPersons] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
-  const [isLoading, setIsLoading] = useState(false); // Novo estado para controle de carregamento
+  const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState({
     nameForename: '',
     nationality: ''
@@ -25,7 +24,7 @@ const InterpolPage = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      setIsLoading(true); // Ativa o estado de carregamento
+      setIsLoading(true);
       const queryString = Object.entries(appliedFilters).map(([key, value]) => `${key}=${value}`).join('&');
       try {
         const response = await fetch(
@@ -39,7 +38,7 @@ const InterpolPage = () => {
       } catch (error) {
         console.error('Erro ao buscar dados da Interpol:', error);
       }
-      setIsLoading(false); // Desativa o estado de carregamento
+      setIsLoading(false);
     };
 
     fetchData();
@@ -58,7 +57,7 @@ const InterpolPage = () => {
         </div>
         <div className="col-md-9">
           {isLoading ? (
-            <LoadingComponent /> // Mostra o componente de carregamento quando isLoading for verdadeiro
+            <LoadingSpinner /> // Mostra o componente de carregamento quando isLoading for verdadeiro
           ) : (
             <div className="row">
               {interpolPersons.map((person) => (
