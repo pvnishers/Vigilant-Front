@@ -1,6 +1,6 @@
 /* styles.css */
 .custom-image-size {
-    width: 150px;
+    width: 10rem;
     height: 150px;
     object-fit: cover;
   }
@@ -10,3 +10,23 @@
     height: 400px; /* Defina a altura desejada aqui */
     margin-bottom: 15px;
 }
+.navbar{
+  background-color: #f2f2f2 !important;
+  font-size: larger;
+}
+
+.btn-primary {
+  background-color: #0658f6 !important;
+  border-color: #0658f6 !important;
+}
+
+.nav-link:hover {
+  background-color: #d4dcf4;
+  color: #333;
+}
+
+.active {
+  background-color: #085ef4;
+  color: #f2f2f2 !important;
+}
+

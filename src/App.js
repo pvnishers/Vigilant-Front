@@ -1,5 +1,4 @@
 import React from 'react';
-import './bootstrap/css/bootstrap.min.css';
 import Navbar from './components/Navbar';
 import InterpolPage from './components/InterpolPage'; 
 import FbiPage from './components/FbiPage';
@@ -13,7 +12,7 @@ const App = () => {
       <>
         <Navbar />
         <div className="row mt-3">
-          <div className="col-md-10" id="wanted-persons">
+          <div className="col" id="wanted-persons">
             <Routes>
               <Route path="/fbi" element={<FbiPage/>}>
               </Route>

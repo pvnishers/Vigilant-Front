@@ -1,24 +1,27 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { NavLink, useLocation } from 'react-router-dom';
+import logo from '../images/vigilant-logo-blue-white-cut.png';
 
 const Navbar = () => {
+  const location = useLocation();
+
   return (
-    <nav className="navbar navbar-expand-lg bg-body-tertiary">
+    <nav className="navbar navbar-expand-lg navbar-light bg-light">
       <div className="container-fluid">
-        <Link className="navbar-brand" to="/">Vigilant Core</Link>
+          <img src={logo} alt="Vigilant Core" width="200" />
         <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
             <li className="nav-item">
-              <Link className="nav-link active" aria-current="page" to="/">Home</Link>
+              <NavLink className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} exact to="/">Home</NavLink>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/fbi">FBI</Link>
+              <NavLink className="nav-link" activeClassName="active" to="/fbi">FBI</NavLink>
             </li>
             <li className="nav-item">
-              <Link className="nav-link" to="/interpol">Interpol</Link>
+              <NavLink className="nav-link" activeClassName="active" to="/interpol">Interpol</NavLink>
             </li>
           </ul>
         </div>

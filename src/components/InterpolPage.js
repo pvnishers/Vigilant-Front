@@ -50,16 +50,16 @@ const InterpolPage = () => {
   };
 
   return (
-    <div className="container mt-3">
+    <div className="container mt-3 align-items-center justify-content-center">
       <div className="row">
-        <div className="col-md-3">
+        <div className="col-md-3 mb-4">
           <InterpolFilterForm filters={filters} setFilters={setFilters} applyFilters={applyFilters} />
         </div>
         <div className="col-md-9">
           {isLoading ? (
             <LoadingSpinner />
           ) : (
-            <div className="row">
+            <div className="row ml-15">
               {interpolPersons.map((person) => (
                 <div key={person.id} className="col-md-4">
                   <InterpolPersonCard person={person} />
