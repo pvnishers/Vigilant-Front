@@ -1,18 +1,31 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 const InterpolFilterForm = ({ filters, setFilters, applyFilters }) => {
+  const [debouncedFilters, setDebouncedFilters] = useState(filters);
+  const [filtersChanged, setFiltersChanged] = useState(false);
+
+  useEffect(() => {
+    const debounceTimeout = setTimeout(() => {
+      if (filtersChanged) {
+        applyFilters(debouncedFilters);
+      }
+    }, 1500);
+
+    return () => {
+      clearTimeout(debounceTimeout);
+    };
+  }, [debouncedFilters, applyFilters]);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
+    setDebouncedFilters((prevDebouncedFilters) => ({ ...prevDebouncedFilters, [name]: value }));
+    setFiltersChanged(true);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    applyFilters();
-  };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form>
       <div className="mb-3">
         <label htmlFor="nameForename-filter" className="form-label">Name</label>
         <input
@@ -35,7 +48,6 @@ const InterpolFilterForm = ({ filters, setFilters, applyFilters }) => {
           onChange={handleInputChange}
         />
       </div>
-      <button type="submit" className="btn btn-primary">Submit</button>
     </form>
   );
 };

@@ -1,4 +1,3 @@
-/* styles.css */
 .custom-image-size {
     width: 10rem;
     height: 150px;
@@ -7,9 +6,10 @@
   
 .person-card {
     width: 16rem;
-    height: 400px; /* Defina a altura desejada aqui */
+    height: 25rem;
     margin-bottom: 15px;
 }
+
 .navbar{
   background-color: #f2f2f2 !important;
   font-size: larger;
@@ -30,3 +30,6 @@
   color: #f2f2f2 !important;
 }
 
+.modal-img{
+  max-height: 350px;
+}

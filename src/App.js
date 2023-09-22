@@ -1,31 +1,56 @@
-import React from 'react';
+import React, { Fragment } from 'react';
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import InterpolPage from './components/InterpolPage'; 
-import FbiPage from './components/FbiPage';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
+import Home from './components/HomePage';
+import FbiPage from './components/FbiPage'; // Certifique-se de importar o componente FbiPage
+import InterpolPage from './components/InterpolPage'; // Certifique-se de importar o componente InterpolPage
+import Register from './components/RegisterComponent';
+import Login from './components/LoginComponent';
+import { AuthenticationProvider, useAuth } from './contexts/AuthenticationContext';
 
+const Protected = ({ isAdmin, children }) => {
+  const { currentUser } = useAuth(); 
+
+  if (!currentUser) {
+    return <Navigate to="/login" />;
+  }
+
+  if (isAdmin && currentUser.role !== 'admin') {
+    return <Navigate to="/login" />;
+  }
+
+  return <Fragment>{children}</Fragment>;
+};
 
 const App = () => {
-
   return (
-    <Router>
-      <>
-        <Navbar />
-        <div className="row mt-3">
-          <div className="col" id="wanted-persons">
-            <Routes>
-              <Route path="/fbi" element={<FbiPage/>}>
-              </Route>
-              <Route path="/interpol" element={<InterpolPage/>}>
-              </Route>
-              <Route path="/">
-              </Route>
-            </Routes>
-          </div>
-        </div>
-      </>
-    </Router>
+    <AuthenticationProvider>
+      <Router>
+        <Fragment>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={
+              <Protected>
+                <Home />
+              </Protected>
+            } />
+            <Route path="/fbi" element={
+              <Protected>
+                <FbiPage />
+              </Protected>
+            } />
+            <Route path="/interpol" element={
+              <Protected>
+                <InterpolPage />
+              </Protected>
+            } />
+            <Route path="/register" element={<Register />} />
+            <Route path="/login" element={<Login />} />
+          </Routes>
+        </Fragment>
+      </Router>
+    </AuthenticationProvider>
   );
-};
+}
 
 export default App;

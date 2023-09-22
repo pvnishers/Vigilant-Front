@@ -55,13 +55,13 @@ const FbiPage = () => {
         <div className="col-md-3">
           <FbiFilterForm filters={filters} setFilters={setFilters} applyFilters={applyFilters} />
         </div>
-        <div className="col-md-9">
+        <div className="col-md-9 ml-auto">
           {isLoading ? (
             <LoadingSpinner />
           ) : (
             <div className="row">
               {fbiPersons.map((person) => (
-                <div key={person.id} className="col-md-4">
+                <div key={person.id} className="col-xl-4 col-md-6 col-sm-12">
                   <FbiPersonCard person={person} />
                 </div>
               ))}

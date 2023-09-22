@@ -1,9 +1,21 @@
 import React from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../images/vigilant-logo-blue-white-cut.png';
+import { useAuth } from '../contexts/AuthenticationContext';
 
 const Navbar = () => {
   const location = useLocation();
+  const { currentUser, logout } = useAuth(); 
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    try {
+      await logout(); 
+      navigate('/login'); 
+    } catch (error) {
+      console.error("Erro ao fazer logout", error);
+    }
+  };
 
   return (
     <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -24,6 +36,25 @@ const Navbar = () => {
               <NavLink className="nav-link" activeClassName="active" to="/interpol">Interpol</NavLink>
             </li>
           </ul>
+          {currentUser ? (
+            <div className="d-flex ms-auto">
+              <span className="navbar-text me-2">
+                Olá, {currentUser}!
+              </span>
+              <button className="btn btn-outline-primary" onClick={handleLogout}>
+                Logout
+              </button>
+            </div>
+          ) : (
+            <div className="d-flex ms-auto">
+              <button className="btn btn-outline-primary me-2" onClick={() => navigate('/login')}>
+                Login
+              </button>
+              <button className="btn btn-primary" onClick={() => navigate('/register')}>
+                Register
+              </button>
+            </div>
+          )}
         </div>
       </div>
     </nav>
