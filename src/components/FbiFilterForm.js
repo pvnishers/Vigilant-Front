@@ -14,7 +14,7 @@ const FbiFilterForm = ({ filters, setFilters, applyFilters }) => {
     return () => {
       clearTimeout(debounceTimeout);
     };
-  }, [debouncedFilters, applyFilters]);
+  }, [debouncedFilters, applyFilters, filtersChanged]);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;

@@ -71,7 +71,6 @@ export const AuthenticationProvider = ({ children }) => {
             });
     
             if (response.ok) {
-                const data = await response.json();
                 console.log("Registro bem-sucedido!");
                 setCurrentUser(username); 
             } else {
