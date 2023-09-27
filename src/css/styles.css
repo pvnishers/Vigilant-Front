@@ -33,3 +33,16 @@
 .modal-img{
   max-height: 350px;
 }
+
+.spacer{
+  height: 100%;
+}
+
+.background-color{
+  background-color: #f2f2f2;
+  height: 100vh;
+}
+
+.filters{
+  color: #0658f6;
+}

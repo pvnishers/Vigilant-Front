@@ -4,12 +4,12 @@ import FbiPersonDetailsModal from './FbiPersonDetailModal';
 import fallbackImage from '../images/fallback-image.jpg'; 
 
 const FbiPersonCard = ({ person }) => {
-  const truncateSubject = (subject) => {
-    const maxLength = 60;
-    if (subject.length <= maxLength) {
-      return subject;
+  
+  const truncateText = (text, maxLength) => {
+    if (text.length <= maxLength) {
+      return text;
     } else {
-      return subject.substring(0, maxLength) + '...';
+      return text.substring(0, maxLength) + '...';
     }
   };
 
@@ -20,7 +20,7 @@ const FbiPersonCard = ({ person }) => {
   const [modalShow, setModalShow] = useState(false);
 
   return (
-    <div className="card person-card mx-auto d-block">
+    <div className="card align-items-center person-card mx-auto d-block">
       <img 
         src={person.images} 
         onError={handleImageError}
@@ -28,10 +28,11 @@ const FbiPersonCard = ({ person }) => {
         alt={person.title} 
       />
       <div className="card-body">
-        <h5 className="card-title">{person.title}</h5>
-        <p className="card-text">Subject: {truncateSubject(person.subjects || 'N/A')}</p>
+        <h5 className="card-title">{truncateText(person.title, 35)}</h5>
+        <p className="card-text">Subject: {truncateText(person.subjects || 'N/A', 60)}</p>
         <p className="card-text">Nationality: {person.nationality || 'N/A'}</p>
-        <button className="btn btn-primary" onClick={() => setModalShow(true)}>
+        <div className='spacer'></div>
+        <button className="btn btn-primary mt-auto" onClick={() => setModalShow(true)}>
           See details
         </button>
         <FbiPersonDetailsModal

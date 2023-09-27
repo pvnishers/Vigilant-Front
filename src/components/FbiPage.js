@@ -3,6 +3,7 @@ import FbiPersonCard from './FbiPersonCard';
 import PaginationComponent from './PaginationComponent';
 import FbiFilterForm from './FbiFilterForm';
 import LoadingSpinner from './LoadingSpinner';
+import { useAuth } from '../contexts/AuthenticationContext';
 
 const FbiPage = () => {
   const [fbiPersons, setFbiPersons] = useState([]);
@@ -23,6 +24,7 @@ const FbiPage = () => {
   const applyFilters = () => {
     setAppliedFilters(filters);
   };
+  const { currentUser } = useAuth();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -30,7 +32,12 @@ const FbiPage = () => {
       const queryString = Object.entries(appliedFilters).map(([key, value]) => `${key}=${value}`).join('&');
       try {
         const response = await fetch(
-          `https://vigilant-api-a2xyukeyka-uc.a.run.app/fbi/getallwanted?page=${currentPage + 1}&${queryString}`
+          `https://vigilant-api-a2xyukeyka-uc.a.run.app/fbi/getallwanted?page=${currentPage + 1}&${queryString}`,
+          {
+            headers: {
+              'Authorization': `Bearer ${currentUser?.token}`,
+            },
+          }
         );
         if (response.ok) {
           const data = await response.json();
@@ -43,7 +50,7 @@ const FbiPage = () => {
       setIsLoading(false);
     };
     fetchData();
-  }, [currentPage, appliedFilters]);
+  }, [currentPage, appliedFilters, currentUser?.token]);
 
   const handlePageChange = (selectedPage) => {
     setCurrentPage(selectedPage.selected);

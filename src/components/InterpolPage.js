@@ -4,19 +4,25 @@ import InterpolPersonCard from './InterpolPersonCard';
 import PaginationComponent from './PaginationComponent';
 import InterpolFilterForm from './InterpolFilterForm';
 import LoadingSpinner from './LoadingSpinner'; 
+import { useAuth } from '../contexts/AuthenticationContext';
+
 const InterpolPage = () => {
   const [interpolPersons, setInterpolPersons] = useState([]);
   const [totalRecords, setTotalRecords] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState({
     nameForename: '',
-    nationality: ''
+    nationality: '',
+    sex: '',
+    charge: '',
+    issuingCountry: ''
   });
   const [appliedFilters, setAppliedFilters] = useState({});
   const itemsPerPage = 15;
   const navigate = useNavigate();
   const location = useLocation();
   const currentPage = new URLSearchParams(location.search).get('page') || 1;
+  const { currentUser } = useAuth();
 
   const applyFilters = () => {
     setAppliedFilters(filters);
@@ -28,7 +34,7 @@ const InterpolPage = () => {
       const queryString = Object.entries(appliedFilters).map(([key, value]) => `${key}=${value}`).join('&');
       try {
         const response = await fetch(
-          `https://vigilant-api-a2xyukeyka-uc.a.run.app/interpol/getallnotices?page=${currentPage}&${queryString}`
+          `https://vigilant-api-a2xyukeyka-uc.a.run.app/interpol/getallnotices?page=${currentPage}&${queryString}`,
         );
         if (response.ok) {
           const data = await response.json();
@@ -36,7 +42,7 @@ const InterpolPage = () => {
           setTotalRecords(data.totalRecords);
         }
       } catch (error) {
-        console.error('Erro ao buscar dados da Interpol:', error);
+        console.error('Error:', error);
       }
       setIsLoading(false);
     };
@@ -61,7 +67,7 @@ const InterpolPage = () => {
           ) : (
             <div className="row ml-15">
               {interpolPersons.map((person) => (
-                <div key={person.id} className="col-md-4">
+                <div key={person.id} className="col-xl-4 col-md-6 col-sm-12">
                   <InterpolPersonCard person={person} />
                 </div>
               ))}

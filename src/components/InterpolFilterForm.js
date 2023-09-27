@@ -4,6 +4,14 @@ const InterpolFilterForm = ({ filters, setFilters, applyFilters }) => {
   const [debouncedFilters, setDebouncedFilters] = useState(filters);
   const [filtersChanged, setFiltersChanged] = useState(false);
 
+  const initialFilters = {
+    nameForename: '',
+    nationality: '',
+    sex: '',
+    charge: '',
+    issuingCountry: '',
+  };
+
   useEffect(() => {
     const debounceTimeout = setTimeout(() => {
       if (filtersChanged) {
@@ -23,15 +31,20 @@ const InterpolFilterForm = ({ filters, setFilters, applyFilters }) => {
     setFiltersChanged(true);
   };
 
+  const handleClearFilters = () => {
+    setFilters(initialFilters);
+    setDebouncedFilters(initialFilters);
+    setFiltersChanged(true);
+  };
 
   return (
     <form>
       <div className="mb-3">
-        <label htmlFor="nameForename-filter" className="form-label">Name</label>
+        <label htmlFor="name-filter" className="form-label">Name</label>
         <input
           type="text"
           className="form-control"
-          id="nameForename-filter"
+          id="name-filter"
           name="nameForename"
           value={filters.nameForename}
           onChange={handleInputChange}
@@ -48,6 +61,60 @@ const InterpolFilterForm = ({ filters, setFilters, applyFilters }) => {
           onChange={handleInputChange}
         />
       </div>
+      <div className="col mb-3">
+          <label className="form-label">
+            Sex
+          </label>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="radio"
+              id="male-filter"
+              name="sex"
+              value="M"
+              checked={filters.sex === 'M'}
+              onChange={handleInputChange}
+            />
+            <label className="form-check-label" for="male-filter">Male</label>
+          </div>
+          <div className="form-check">
+            <input
+              className="form-check-input"
+              type="radio"
+              id="female-filter"
+              name="sex"
+              value="F"
+              checked={filters.sex === 'F'}
+              onChange={handleInputChange}
+            />
+            <label className="form-check-label" for="female-filter">Female</label>
+          </div>
+        </div>
+      <div className="mb-3">
+        <label htmlFor="charge-filter" className="form-label">Charge</label>
+        <input
+          type="text"
+          className="form-control"
+          id="charge-filter"
+          name="charge"
+          value={filters.charge}
+          onChange={handleInputChange}
+        />
+      </div>
+      <div className="mb-3">
+        <label htmlFor="charge-country-filter" className="form-label">Charge Country</label>
+        <input
+          type="text"
+          className="form-control"
+          id="charge-country-filter"
+          name="issuingCountry"
+          value={filters.issuingCountry}
+          onChange={handleInputChange}
+        />
+      </div>
+      <button type="button" className="btn btn-secondary" onClick={handleClearFilters}>
+        Clear Filters
+      </button>
     </form>
   );
 };

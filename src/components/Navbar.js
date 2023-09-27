@@ -37,16 +37,16 @@ const Navbar = () => {
             </li>
           </ul>
           {currentUser ? (
-            <div className="d-flex ms-auto">
+            <div className="d-flex mt-auto ms-auto">
               <span className="navbar-text me-2">
-                Olá, {currentUser}!
+                Olá, {currentUser.fullName}!
               </span>
               <button className="btn btn-outline-primary" onClick={handleLogout}>
                 Logout
               </button>
             </div>
           ) : (
-            <div className="d-flex ms-auto">
+            <div className="d-flex mt-auto ms-auto">
               <button className="btn btn-outline-primary me-2" onClick={() => navigate('/login')}>
                 Login
               </button>
