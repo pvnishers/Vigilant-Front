@@ -25,7 +25,7 @@ const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav">
+          <ul className="navbar-nav ">
             <li className="nav-item">
               <NavLink className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} exact to="/">Home</NavLink>
             </li>
@@ -36,25 +36,14 @@ const Navbar = () => {
               <NavLink className="nav-link" activeClassName="active" to="/interpol">Interpol</NavLink>
             </li>
           </ul>
-          {currentUser ? (
             <div className="d-flex mt-auto ms-auto">
               <span className="navbar-text me-2">
-                Olá, {currentUser.fullName}!
+                Olá, {currentUser?.fullName}!
               </span>
-              <button className="btn btn-outline-primary" onClick={handleLogout}>
+              <button className="btn logout-button btn-outline-primary mt-auto" onClick={handleLogout}>
                 Logout
               </button>
             </div>
-          ) : (
-            <div className="d-flex mt-auto ms-auto">
-              <button className="btn btn-outline-primary me-2" onClick={() => navigate('/login')}>
-                Login
-              </button>
-              <button className="btn btn-primary" onClick={() => navigate('/register')}>
-                Register
-              </button>
-            </div>
-          )}
         </div>
       </div>
     </nav>

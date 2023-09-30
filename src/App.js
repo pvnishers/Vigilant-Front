@@ -2,15 +2,14 @@ import React, { Fragment } from 'react';
 import { BrowserRouter as Router, Route, Routes, Navigate, useLocation } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import Home from './components/HomePage';
-import FbiPage from './components/FbiPage'; 
-import InterpolPage from './components/InterpolPage';
-import Register from './components/RegisterComponent';
-import Login from './components/LoginComponent';
-import AdminLoginComponent from './components/AdminLoginComponent';
-import AdminDashboard from './components/AdminDashboard';
+import FbiPage from './components/Fbi/FbiPage'; 
+import InterpolPage from './components/Interpol/InterpolPage';
+import Register from './components/Forms/RegisterComponent';
+import Login from './components/Forms/LoginComponent';
 import { AuthenticationProvider, useAuth } from './contexts/AuthenticationContext';
+import './css/styles.css';
 
-const Protected = ({ isAdmin, children }) => {
+const Protected = ({ children }) => {
   const { currentUser } = useAuth(); 
 
   if (!currentUser) {
@@ -32,8 +31,6 @@ const RoutesWithNavbar = () => {
         <Route path="/interpol" element={<Protected><InterpolPage /></Protected>} />
         <Route path="/register" element={<Register />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/admin" element={<AdminLoginComponent />} />
-        <Route path="/admin/dashboard" element={<Protected isAdmin><AdminDashboard /></Protected>} />
       </Routes>
     </Fragment>
   );
