@@ -38,8 +38,8 @@ const InterpolFilterForm = ({ filters, setFilters, applyFilters }) => {
   };
 
   return (
-    <form>
-      <div className="mb-3">
+    <form className="mb-3 filters">
+      <div>
         <label htmlFor="name-filter" className="form-label">Name</label>
         <input
           type="text"

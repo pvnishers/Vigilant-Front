@@ -2,6 +2,9 @@ import React from 'react';
 import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import logo from '../images/vigilant-logo-blue-white-cut.png';
 import { useAuth } from '../contexts/AuthenticationContext';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faHouse } from '@fortawesome/free-solid-svg-icons';
+import { faRightFromBracket } from '@fortawesome/free-solid-svg-icons';
 
 const Navbar = () => {
   const location = useLocation();
@@ -25,14 +28,16 @@ const Navbar = () => {
           <span className="navbar-toggler-icon"></span>
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
-          <ul className="navbar-nav ">
-            <li className="nav-item">
-              <NavLink className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} exact to="/">Home</NavLink>
+          <ul className="navbar-nav">
+            <li className="nav-item mx-1">
+            <NavLink className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} exact to="/">
+              <FontAwesomeIcon icon={faHouse}/>
+            </NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item mx-1">
               <NavLink className="nav-link" activeClassName="active" to="/fbi">FBI</NavLink>
             </li>
-            <li className="nav-item">
+            <li className="nav-item mx-1">
               <NavLink className="nav-link" activeClassName="active" to="/interpol">Interpol</NavLink>
             </li>
           </ul>
@@ -41,7 +46,7 @@ const Navbar = () => {
                 Olá, {currentUser?.fullName}!
               </span>
               <button className="btn logout-button btn-outline-primary mt-auto" onClick={handleLogout}>
-                Logout
+                <FontAwesomeIcon icon={faRightFromBracket} />
               </button>
             </div>
         </div>
