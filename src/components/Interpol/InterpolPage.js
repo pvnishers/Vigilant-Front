@@ -27,18 +27,12 @@ const InterpolPage = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
     const fetchData = async () => {
       setIsLoading(true);
       const queryString = Object.entries(appliedFilters).map(([key, value]) => `${key}=${value}`).join('&');
       try {
         const response = await fetch(
           `https://vigilant-api-a2xyukeyka-uc.a.run.app/interpol/getallnotices?page=${currentPage}&${queryString}`,
-          {
-            headers: {
-                'Authorization': `Bearer ${token}`,
-            },
-        }
         );
         if (response.ok) {
           const data = await response.json();

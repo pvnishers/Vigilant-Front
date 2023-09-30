@@ -25,7 +25,6 @@ const FbiPage = () => {
   };
 
   useEffect(() => {
-    const token = localStorage.getItem('token');
     const fetchData = async () => {
       setIsLoading(true);
       const queryString = Object.entries(appliedFilters).map(([key, value]) => `${key}=${value}`).join('&');
