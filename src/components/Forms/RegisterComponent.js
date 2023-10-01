@@ -8,7 +8,7 @@ function RegisterComponent() {
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [error, setError] = useState(null);
+  const [errors, setErrors] = useState(null); // Change error state to store an array of errors
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -19,30 +19,12 @@ function RegisterComponent() {
       navigate('/login');
     } catch (error) {
       console.error(error);
-      setError(error);
+      setErrors(error.errors); // Set the errors received from the server
     }
   };
 
   const handleLogin = () => {
     navigate('/login');
-  };
-
-  const renderErrors = () => {
-    if (error && error.errors) {
-      const passwordError = error.errors.Password;
-
-      if (Array.isArray(passwordError)) {
-        return passwordError.map((errMsg, index) => (
-          <li key={index}>{errMsg}</li>
-        ));
-      } else {
-        return <li>{passwordError}</li>;
-      }
-    } else if (error && error.errors === "Password and password confirmation do not match.") {
-      return <li>{error.errors}</li>;
-    } else {
-      return <li>An error occurred during registration.</li>;
-    }
   };
 
   return (
@@ -70,10 +52,14 @@ function RegisterComponent() {
                   <label htmlFor="confirmPassword" className='form-label'>Confirm your password</label>
                   <input type="password" className="form-control" id="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                 </div>
-                {error && (
-                  <ul className="alert alert-danger px-4">
-                    {renderErrors()}
-                  </ul>
+                {errors && (
+                  <div className="alert alert-danger px-4">
+                    <ul>
+                      {Object.values(errors).map((error, index) => (
+                        <li key={index}>{error}</li>
+                      ))}
+                    </ul>
+                  </div>
                 )}
 
                 <button type="submit" className="btn btn-primary mx-auto d-block">Register</button>
