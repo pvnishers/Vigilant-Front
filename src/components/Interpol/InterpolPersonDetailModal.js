@@ -19,7 +19,7 @@ const InterpolPersonDetailsModal = ({ person, show, onHide }) => {
 
   const chargesElements = person.arrestWarrants.map((warrant, index) => (
     <div key={index}>
-      {`${capitalizeFirstLetter(warrant.charge)} - ${countries.getName(warrant.issuing_country_id, "en") || warrant.issuing_country_id}`}
+      {`${capitalizeFirstLetter(warrant.charge)} - ${countries.getName(warrant.issuingCountryId, "en") || warrant.issuingCountryId}`}
     </div>
   ));
 
@@ -54,7 +54,8 @@ const InterpolPersonDetailsModal = ({ person, show, onHide }) => {
           </div>
           <div className="modal-footer">
             <button type="button" className="btn btn-secondary" onClick={onHide}>Close</button>
-            <a href={person.url} className="btn btn-primary" target="_blank" rel="noopener noreferrer">See More</a>
+            <a href={`https://www.interpol.int/How-we-work/Notices/Red-Notices/View-Red-Notices#${person.entityId.replace(/\//g, '-')}`} className="btn btn-primary" target="_blank" rel="noopener noreferrer">See More</a>
+
           </div>
         </div>
       </div>

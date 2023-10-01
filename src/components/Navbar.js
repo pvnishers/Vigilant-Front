@@ -29,7 +29,7 @@ const Navbar = () => {
         </button>
         <div className="collapse navbar-collapse" id="navbarNavDropdown">
           <ul className="navbar-nav">
-            <li className="nav-item mx-1">
+            <li className="nav-item mx-1 home-nav">
             <NavLink className={`nav-link ${location.pathname === '/' ? 'active' : ''}`} exact to="/">
               <FontAwesomeIcon icon={faHouse}/>
             </NavLink>

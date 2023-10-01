@@ -36,6 +36,7 @@
 
 .modal-img{
   max-height: 350px;
+  min-height: 150px;
 }
 
 .spacer{
@@ -48,10 +49,11 @@
   min-height: 110vh;
 }
 
-.filters{
-  color: #0658f6;
-}
 
 .logout-button{
   max-height: 35px;
+}
+
+.home-nav{
+  max-width: 25px;
 }

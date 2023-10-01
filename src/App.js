@@ -8,6 +8,7 @@ import Register from './components/Forms/RegisterComponent';
 import Login from './components/Forms/LoginComponent';
 import { AuthenticationProvider, useAuth } from './contexts/AuthenticationContext';
 import './css/styles.css';
+import './App.css';
 
 const Protected = ({ children }) => {
   const { currentUser } = useAuth(); 
