@@ -49,30 +49,30 @@ export const AuthenticationProvider = ({ children }) => {
 
     const register = async (username, password, confirmPassword, fullName) => {
         try {
-            const response = await fetch('https://vigilant-api-a2xyukeyka-uc.a.run.app/Account/Register', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ username, password, confirmPassword, fullName }),
-            });
-    
-            if (response.ok) {
-                const data = await response.json();
-                console.log(data.Message);
-            } else {
-                const data = await response.json();
-                console.error(data.errors);
-                throw data.errors;
-            }
+          const response = await fetch('https://vigilant-api-a2xyukeyka-uc.a.run.app/Account/Register', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ username, password, confirmPassword, fullName }),
+          });
+      
+          if (response.ok) {
+            const data = await response.json();
+            console.log(data.Message);
+          } else {
+            const errorData = await response.json();
+            const errors = errorData.errors || ['An error occurred during registration.'];
+            console.error(errors);
+            console.log(errors);
+            throw errors;
+          }
         } catch (error) {
-            console.error(error);
-            throw error;
+          console.error(error);
+          throw error;
         }
-    };
-    
-    
-    
+      };
+      
 
     const value = {
         currentUser,

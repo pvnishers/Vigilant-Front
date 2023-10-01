@@ -10,27 +10,44 @@ function RegisterComponent() {
   const [confirmPassword, setConfirmPassword] = useState('');
   const [error, setError] = useState(null);
   const { register } = useAuth();
-  const navigate = useNavigate(); 
+  const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-        await register(username, password, confirmPassword, fullName);
-        navigate('/login');
+      await register(username, password, confirmPassword, fullName);
+      navigate('/login');
     } catch (error) {
-        console.error(error);
-        setError(error);
+      console.error(error);
+      setError(error);
     }
-};
+  };
 
-  
-const handleLogin = () => {
+  const handleLogin = () => {
     navigate('/login');
+  };
+
+  const renderErrors = () => {
+    if (error && error.errors) {
+      const passwordError = error.errors.Password;
+
+      if (Array.isArray(passwordError)) {
+        return passwordError.map((errMsg, index) => (
+          <li key={index}>{errMsg}</li>
+        ));
+      } else {
+        return <li>{passwordError}</li>;
+      }
+    } else if (error && error.errors === "Password and password confirmation do not match.") {
+      return <li>{error.errors}</li>;
+    } else {
+      return <li>An error occurred during registration.</li>;
+    }
   };
 
   return (
     <div className="container-fluid background-color pt-5">
-        <img className='mx-auto d-block mb-5' src={logo} alt="Vigilant Core" width="200" />
+      <img className='mx-auto d-block mb-5' src={logo} alt="Vigilant Core" width="200" />
       <div className="row justify-content-center">
         <div className="col-md-6">
           <div className="card">
@@ -50,27 +67,22 @@ const handleLogin = () => {
                   <input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 <div className='mb-3'>
-                    <label htmlFor="confirmPassword" className='form-label'>Confirm your password</label>
-                    <input type="password" className="form-control" id="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
+                  <label htmlFor="confirmPassword" className='form-label'>Confirm your password</label>
+                  <input type="password" className="form-control" id="confirmPassword" value={confirmPassword} onChange={(e) => setConfirmPassword(e.target.value)} />
                 </div>
                 {error && (
-                    <ul className="alert alert-danger px-4">
-                        {Array.isArray(error) ? (
-                          error.map((message, index) => (
-                            <li key={`error-${index}`}>{message}</li>
-                          ))
-                        ) : (
-                          <li>{error}</li>
-                        )}
-                    </ul>
+                  <ul className="alert alert-danger px-4">
+                    {renderErrors()}
+                  </ul>
                 )}
+
                 <button type="submit" className="btn btn-primary mx-auto d-block">Register</button>
               </form>
             </div>
           </div>
           <div className='register-sec text-center my-5'>
-              <p>Already have an account? Login now</p>  
-              <button type="button" className="btn btn-secondary" onClick={handleLogin}>Login</button>
+            <p>Already have an account? Login now</p>
+            <button type="button" className="btn btn-secondary" onClick={handleLogin}>Login</button>
           </div>
         </div>
       </div>
