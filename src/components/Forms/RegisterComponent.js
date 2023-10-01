@@ -55,14 +55,15 @@ const handleLogin = () => {
                 </div>
                 {error && (
                     <ul className="alert alert-danger px-4">
-                        {Object.entries(error).map(([field, messages]) => (
-                        messages.map((message, index) => (
-                            <li key={`${field}-${index}`}>{message}</li>
-                        ))
-                        ))}
+                        {Array.isArray(error) ? (
+                          error.map((message, index) => (
+                            <li key={`error-${index}`}>{message}</li>
+                          ))
+                        ) : (
+                          <li>{error}</li>
+                        )}
                     </ul>
                 )}
-
                 <button type="submit" className="btn btn-primary mx-auto d-block">Register</button>
               </form>
             </div>
