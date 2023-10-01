@@ -23,8 +23,13 @@ const InterpolPersonDetailsModal = ({ person, show, onHide }) => {
     </div>
   ));
 
-  const nationalityNames = person.nationalities.split(',').map(code => countries.getName(code, "en") || code).join(', ');
-
+  let nationalityNames;
+    if (person && person.nationalities) {
+      nationalityNames = person.nationalities.split(',').map(code => countries.getName(code, "en") || code).join(', ');
+    } else {
+      nationalityNames = "N/A"; // Ou qualquer valor padrão que você deseje
+    }
+    
   let formattedDateOfBirth = 'N/A';
   if (person.dateOfBirth) {
     const date = new Date(person.dateOfBirth);

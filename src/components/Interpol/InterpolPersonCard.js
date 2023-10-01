@@ -27,8 +27,13 @@ const InterpolPersonCard = ({ person }) => {
     ? truncateText(capitalizeFirstLetter(person.arrestWarrants[0].charge), 30)
     : 'N/A';
   
-  const nationalityNames = person.nationalities.split(',').map(code => countries.getName(code, "en") || code).join(', ');
-
+    let nationalityNames;
+    if (person && person.nationalities) {
+      nationalityNames = person.nationalities.split(',').map(code => countries.getName(code, "en") || code).join(', ');
+    } else {
+      nationalityNames = "N/A"; // Ou qualquer valor padrão que você deseje
+    }
+    
   const [modalShow, setModalShow] = useState(false);
 
   return (

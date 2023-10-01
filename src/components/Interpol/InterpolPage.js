@@ -11,7 +11,7 @@ const InterpolPage = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [filters, setFilters] = useState({
     nameForename: '',
-    nationality: '',
+    nationalities: '',
     sex: '',
     charge: '',
     issuingCountry: ''
