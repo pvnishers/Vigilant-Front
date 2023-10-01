@@ -8,7 +8,6 @@ function RegisterComponent() {
   const [password, setPassword] = useState('');
   const [fullName, setFullName] = useState('');
   const [confirmPassword, setConfirmPassword] = useState('');
-  const [errors, setErrors] = useState(null); // Change error state to store an array of errors
   const { register } = useAuth();
   const navigate = useNavigate();
 
@@ -19,7 +18,6 @@ function RegisterComponent() {
       navigate('/login');
     } catch (error) {
       console.error(error);
-      setErrors(error.errors); // Set the errors received from the server
     }
   };
 
