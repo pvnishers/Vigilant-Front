@@ -6,7 +6,7 @@ const InterpolFilterForm = ({ filters, setFilters, applyFilters }) => {
 
   const initialFilters = {
     nameForename: '',
-    nationality: '',
+    nationalities: '',
     sex: '',
     charge: '',
     issuingCountryId: '',
@@ -56,8 +56,8 @@ const InterpolFilterForm = ({ filters, setFilters, applyFilters }) => {
           type="text"
           className="form-control"
           id="nationality-filter"
-          name="nationality"
-          value={filters.nationality}
+          name="nationalities"
+          value={filters.nationalities}
           onChange={handleInputChange}
         />
       </div>
