@@ -48,41 +48,39 @@ export const AuthenticationProvider = ({ children }) => {
 
 
     const register = async (username, password, confirmPassword, fullName) => {
-        try {
+      try {
           const response = await fetch('https://vigilant-api-a2xyukeyka-uc.a.run.app/Account/Register', {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ username, password, confirmPassword, fullName }),
+              method: 'POST',
+              headers: {
+                  'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ username, password, confirmPassword, fullName }),
           });
       
+          const data = await response.json();
+      
           if (response.ok) {
-            const data = await response.json();
-            console.log(data.Message);
+              console.log(data.message);
           } else {
-            const errors = await response.json();
-            console.error(errors);
-            console.log(errors);
-            throw errors;
+              console.error(data.message);
+              throw data;
           }
-        } catch (error) {
+      } catch (error) {
           console.error(error);
           throw error;
-        }
-      };
-      
+      }
+  };
 
-    const value = {
-        currentUser,
-        login,
-        logout,
-        register,
-    };
+  const value = {
+      currentUser,
+      login,
+      logout,
+      register,
+  };
 
-    return (
-        <AuthenticationContext.Provider value={value}>
-            {children}
-        </AuthenticationContext.Provider>
-    );
+  return (
+      <AuthenticationContext.Provider value={value}>
+          {children}
+      </AuthenticationContext.Provider>
+  );
 };

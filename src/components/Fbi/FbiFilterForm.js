@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faFilter } from '@fortawesome/free-solid-svg-icons';
 
 const FbiFilterForm = ({ filters, setFilters, applyFilters }) => {
   const [debouncedFilters, setDebouncedFilters] = useState(filters);
   const [filtersChanged, setFiltersChanged] = useState(false);
+  const [isExpanded, setIsExpanded] = useState(window.innerWidth >= 768);
 
   const initialFilters = {
     title: '',
@@ -24,6 +27,18 @@ const FbiFilterForm = ({ filters, setFilters, applyFilters }) => {
     };
   }, [debouncedFilters, applyFilters, filtersChanged]);
 
+  useEffect(() => {
+    const handleResize = () => {
+      setIsExpanded(window.innerWidth >= 768);
+    };
+
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFilters((prevFilters) => ({ ...prevFilters, [name]: value }));
@@ -39,7 +54,18 @@ const FbiFilterForm = ({ filters, setFilters, applyFilters }) => {
 
   return (
     <div className="mb-3 filters">
-      <form>
+      <button 
+        type="button" 
+        className="btn btn-primary mb-3 d-md-none" 
+        data-bs-toggle="collapse" 
+        data-bs-target="#fbiFilterForm" 
+        aria-expanded={isExpanded} 
+        aria-controls="fbiFilterForm"
+        onClick={() => setIsExpanded(!isExpanded)}
+      >
+        <FontAwesomeIcon icon={faFilter} />
+      </button>
+      <form className={isExpanded ? 'collapse show' : 'collapse'} id="fbiFilterForm">
         {['title', 'subject', 'nationality', 'race'].map((field, index) => (
           <div key={index} className="col mb-3">
             <label className="form-label" htmlFor={`${field}-filter`}>
@@ -69,7 +95,7 @@ const FbiFilterForm = ({ filters, setFilters, applyFilters }) => {
               checked={filters.sex === 'male'}
               onChange={handleInputChange}
             />
-            <label className="form-check-label" for="male-filter">Male</label>
+            <label className="form-check-label" htmlFor="male-filter">Male</label>
           </div>
           <div className="form-check">
             <input
@@ -81,7 +107,7 @@ const FbiFilterForm = ({ filters, setFilters, applyFilters }) => {
               checked={filters.sex === 'female'}
               onChange={handleInputChange}
             />
-            <label className="form-check-label" for="female-filter">Female</label>
+            <label className="form-check-label" htmlFor="female-filter">Female</label>
           </div>
         </div>
         <button type="button" className="btn btn-secondary" onClick={handleClearFilters}>
