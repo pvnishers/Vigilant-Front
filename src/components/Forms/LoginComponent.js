@@ -2,23 +2,28 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthenticationContext';
 import logo from '../../images/vigilant-logo-blue-white-cut.png';
+import LoadingSpinner from '../LoadingSpinner';
 
 function LoginComponent() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true); 
     try {
-      await login(username, password);
-      navigate('/');
+        await login(username, password);
+        navigate('/');
     } catch (error) {
-      setError(error.message);
+        setError(error.message);
+    } finally {
+        setLoading(false);
     }
-  };
+};
 
   const handleRegister = () => {
     navigate('/register');
@@ -42,7 +47,9 @@ function LoginComponent() {
                   <input type="password" className="form-control" id="password" value={password} onChange={(e) => setPassword(e.target.value)} />
                 </div>
                 {error && <div className="alert alert-danger" role="alert">{error}</div>}
-                <button type="submit" className="btn btn-primary mx-auto d-block">Login</button>
+                <button type="submit" className="btn btn-primary mx-auto d-block" disabled={loading}>
+                    {loading ? <LoadingSpinner /> : "Login"}
+                </button>
               </form>
             </div>
           </div>

@@ -5,6 +5,12 @@ const FbiPersonDetailsModal = ({ person, show, onHide }) => {
   const handleImageError = (e) => {
     e.target.src = fallbackImage;
   };
+  
+  const capitalizeFirstLetter = (string) => {
+    return string ? string.charAt(0).toUpperCase() + string.slice(1).toLowerCase() : '';
+};
+
+const race = capitalizeFirstLetter(person.race || '');
 
   return (
     <div className={`modal fade ${show ? 'show d-block' : ''}`} tabIndex="-1" role="dialog" style={{ display: show ? 'block' : 'none' }}>
@@ -26,7 +32,7 @@ const FbiPersonDetailsModal = ({ person, show, onHide }) => {
               <p><strong>Sex:</strong> {person.sex || 'N/A'}</p>
               <p><strong>Age (Min-Max):</strong> {person.age_Min || '?'} - {person.age_Max || '?'}</p>
               <p><strong>Locations:</strong> {person.locations || 'N/A'}</p>
-              <p><strong>Race:</strong> {person.race || 'N/A'}</p>
+              <p><strong>Race:</strong> {race || 'N/A'}</p>
               <p><strong>Place of Birth:</strong> {person.place_Of_Birth || 'N/A'}</p>
             </div>
           </div>

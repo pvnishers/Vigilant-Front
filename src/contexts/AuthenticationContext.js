@@ -8,8 +8,14 @@ export const useAuth = () => {
 
 export const AuthenticationProvider = ({ children }) => {
     const [currentUser, setCurrentUser] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+        const savedUser = JSON.parse(localStorage.getItem('currentUser'));
+        if (savedUser) {
+            setCurrentUser(savedUser);
+        }
+        setLoading(false);
     }, []);
 
     const login = async (username, password) => {
@@ -21,12 +27,12 @@ export const AuthenticationProvider = ({ children }) => {
                 },
                 body: JSON.stringify({ username, password }),
             });
-
             if (response.ok) {
                 const data = await response.json();
                 console.log(data.Message);
-              
-                setCurrentUser({ fullName: data.name });
+                const user = { fullName: data.name };
+                setCurrentUser(user);
+                localStorage.setItem('currentUser', JSON.stringify(user));
                 console.log(currentUser);
               } else {
                 console.error();
@@ -41,6 +47,7 @@ export const AuthenticationProvider = ({ children }) => {
     const logout = async () => {
         try {
             setCurrentUser(null);
+            localStorage.removeItem('currentUser');
         } catch (error) {
             throw error;
         }
@@ -76,6 +83,7 @@ export const AuthenticationProvider = ({ children }) => {
       login,
       logout,
       register,
+      loading,
   };
 
   return (

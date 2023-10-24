@@ -11,8 +11,12 @@ import './css/styles.css';
 import './App.css';
 
 const Protected = ({ children }) => {
-  const { currentUser } = useAuth(); 
+  const { currentUser, loading } = useAuth(); 
 
+  if (loading) {
+    return null;
+  }
+  
   if (!currentUser) {
     return <Navigate to="/login" />;
   }

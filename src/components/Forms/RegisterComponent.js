@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthenticationContext';
 import logo from '../../images/vigilant-logo-blue-white-cut.png';
+import LoadingSpinner from '../LoadingSpinner';
 
 function RegisterComponent() {
     const [username, setUsername] = useState('');
@@ -9,20 +10,39 @@ function RegisterComponent() {
     const [fullName, setFullName] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
     const [errors, setErrors] = useState(null);
+    const [loading, setLoading] = useState(false);
     const { register } = useAuth();
     const navigate = useNavigate();
 
+    function normalizeErrors(error) {
+        if (Array.isArray(error)) {
+            return error;
+        } else if (error.errors) {
+            return Object.values(error.errors).flat();
+        } else if (error.message) {
+            return [{ description: error.message }];
+        } else if (error.code && error.description) {
+            return [error];
+        } else {
+            return [{ description: "An unknown error occurred." }];
+        }
+    }
+    
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true); 
         try {
             await register(username, password, confirmPassword, fullName);
             navigate('/login');
         } catch (error) {
             console.error(error);
-            setErrors(error);
+            setErrors(normalizeErrors(error));
+        } finally {
+            setLoading(false);
         }
     };
-
+    
     const handleLogin = () => {
         navigate('/login');
     };
@@ -77,18 +97,15 @@ function RegisterComponent() {
                                     />
                                 </div>
                                 {errors && (
-                                    <div className="alert alert-danger px-4">
+                                    <div className="alert alert-danger px-2 py-2">
                                         <ul>
-                                            {errors.message && <li>{errors.message}</li>}
-                                            {errors.errors && (
-                                                Array.isArray(errors.errors)
-                                                    ? errors.errors.map((error, index) => <li key={index}>{error}</li>)
-                                                    : Object.values(errors.errors).map((error, index) => <li key={index}>{error}</li>)
-                                            )}
+                                        {errors.map((error, index) => <li key={index}>{error.description || error}</li>)}
                                         </ul>
                                     </div>
                                 )}
-                                <button type="submit" className="btn btn-primary mx-auto d-block">Register</button>
+                                <button type="submit" className="btn btn-primary mx-auto d-block" disabled={loading}>
+                                    {loading ? <LoadingSpinner /> : "Register"}
+                                </button>
                             </form>
                         </div>
                     </div>
