@@ -31,7 +31,7 @@ const InterpolPersonCard = ({ person }) => {
     if (person && person.nationalities) {
       nationalityNames = person.nationalities.split(',').map(code => countries.getName(code, "en") || code).join(', ');
     } else {
-      nationalityNames = "N/A"; // Ou qualquer valor padrão que você deseje
+      nationalityNames = "N/A";
     }
     
   const [modalShow, setModalShow] = useState(false);
@@ -44,7 +44,7 @@ const InterpolPersonCard = ({ person }) => {
         className="card-img-top custom-image-size mt-2 mx-auto d-block" 
         alt={person.name} 
       />
-      <div className="card-body">
+      <div className="card-body d-flex flex-column justify-content-between">
         <h5 className="card-title">{person.name} {person.forename}</h5>
         <p className="card-text">Charge: {truncatedCharge}</p>
         <p className="card-text">Nationalities: {nationalityNames || 'N/A'}</p>

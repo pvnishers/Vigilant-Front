@@ -60,6 +60,12 @@ const InterpolPage = () => {
           <InterpolFilterForm filters={filters} setFilters={setFilters} applyFilters={applyFilters} />
         </div>
         <div className="col-md-9">
+          <div className="d-sm-block d-md-none">
+              <PaginationComponent
+                pageCount={Math.ceil(totalRecords / itemsPerPage)}
+                onPageChange={handlePageChange}
+              />
+            </div>
           {isLoading ? (
             <LoadingSpinner />
           ) : (
@@ -71,12 +77,13 @@ const InterpolPage = () => {
               ))}
             </div>
           )}
+          <PaginationComponent
+            pageCount={Math.ceil(totalRecords / itemsPerPage)}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
-      <PaginationComponent
-        pageCount={Math.ceil(totalRecords / itemsPerPage)}
-        onPageChange={handlePageChange}
-      />
+      
     </div>
   );
 };

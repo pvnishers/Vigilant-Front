@@ -5,9 +5,15 @@
   }
   
 .person-card {
-    width: 16rem;
-    height: 25rem;
-    margin-bottom: 15px;
+  width: 16rem;
+  height: 25rem;
+  margin-bottom: 15px;
+  display: flex;
+  flex-direction: column;
+}
+
+.card-body{
+  height: 60%;
 }
 
 .navbar{
@@ -37,10 +43,6 @@
 .modal-img{
   max-height: 350px;
   min-height: 150px;
-}
-
-.spacer{
-  height: 100%;
 }
 
 .background-color{

@@ -56,6 +56,12 @@ const FbiPage = () => {
           <FbiFilterForm filters={filters} setFilters={setFilters} applyFilters={applyFilters} />
         </div>
         <div className="col-md-9 ml-auto">
+          <div className="d-sm-block d-md-none">
+            <PaginationComponent
+              pageCount={Math.ceil(totalRecords / itemsPerPage)}
+              onPageChange={handlePageChange}
+            />
+          </div>
           {isLoading ? (
             <LoadingSpinner />
           ) : (
@@ -67,12 +73,13 @@ const FbiPage = () => {
               ))}
             </div>
           )}
+          <PaginationComponent
+            pageCount={Math.ceil(totalRecords / itemsPerPage)}
+            onPageChange={handlePageChange}
+          />
         </div>
       </div>
-      <PaginationComponent
-        pageCount={Math.ceil(totalRecords / itemsPerPage)}
-        onPageChange={handlePageChange}
-      />
+      
     </div>
   );
 };

@@ -26,12 +26,11 @@ const FbiPersonCard = ({ person }) => {
         className="card-img-top custom-image-size mt-2 mx-auto d-block" 
         alt={person.title} 
       />
-      <div className="card-body">
+      <div className="card-body d-flex flex-column justify-content-between">
         <h5 className="card-title">{truncateText(person.title, 30)}</h5>
-        <p className="card-text">Subject: {truncateText(person.subjects || 'N/A', 60)}</p>
+        <p className="card-text">Subject: {truncateText(person.subjects || 'N/A', 40)}</p>
         <p className="card-text">Nationality: {person.nationality || 'N/A'}</p>
-        <div className='spacer'></div>
-        <button className="btn btn-primary mt-auto" onClick={() => setModalShow(true)}>
+        <button className="btn btn-primary" onClick={() => setModalShow(true)}>
           See details
         </button>
         <FbiPersonDetailsModal
