@@ -27,7 +27,7 @@ const FbiPersonCard = ({ person }) => {
         alt={person.title} 
       />
       <div className="card-body d-flex flex-column justify-content-between">
-        <h5 className="card-title">{truncateText(person.title, 30)}</h5>
+        <h5 className="card-title">{truncateText(person.title, 25)}</h5>
         <p className="card-text">Subject: {truncateText(person.subjects || 'N/A', 40)}</p>
         <p className="card-text">Nationality: {person.nationality || 'N/A'}</p>
         <button className="btn btn-primary" onClick={() => setModalShow(true)}>

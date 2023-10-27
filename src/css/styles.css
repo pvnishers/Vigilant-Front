@@ -30,14 +30,14 @@
   background-color: #d4dcf4;
   color: #333;
   border-radius: 5px;
-  max-width: 200px;
+  max-width: 75px;
 }
 
 .active {
   background-color: #085ef4;
   color: #f2f2f2 !important;
   border-radius: 5px;
-  max-width: 200px;
+  max-width: 75px;
 }
 
 .modal-img{

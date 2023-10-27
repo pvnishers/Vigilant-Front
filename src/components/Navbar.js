@@ -34,11 +34,11 @@ const Navbar = () => {
               <FontAwesomeIcon icon={faHouse}/>
             </NavLink>
             </li>
-            <li className="nav-item mx-1">
-              <NavLink className="nav-link" activeClassName="active" to="/fbi">FBI</NavLink>
+            <li className="nav-item">
+              <NavLink className="nav-link px-1" activeClassName="active" to="/fbi">FBI</NavLink>
             </li>
-            <li className="nav-item mx-1">
-              <NavLink className="nav-link" activeClassName="active" to="/interpol">Interpol</NavLink>
+            <li className="nav-item">
+              <NavLink className="nav-link px-1" activeClassName="active" to="/interpol">Interpol</NavLink>
             </li>
           </ul>
             <div className="d-flex mt-auto ms-auto">
