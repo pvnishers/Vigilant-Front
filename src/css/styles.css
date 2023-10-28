@@ -24,6 +24,13 @@
 .btn-primary {
   background-color: #0658f6 !important;
   border-color: #0658f6 !important;
+  max-height: 40px;
+}
+
+.nav-link{
+  max-width: 75px;
+  border-radius: 5px;
+  margin-bottom: 1px;
 }
 
 .nav-link:hover {
@@ -57,5 +64,5 @@
 }
 
 .home-nav{
-  max-width: 50px;
+  max-width: 22px;
 }
